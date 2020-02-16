@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Error from './Error'
+import PropTypes from 'prop-types';
 
 const Formulario = ( { busqueda, guardarBusqueda, guardarConsultar } ) => {
 
@@ -26,13 +28,14 @@ const Formulario = ( { busqueda, guardarBusqueda, guardarConsultar } ) => {
 
     //Para monitorear/validar el Formulario luego de que el usuario presione el submit
     const handleSubmit = e => {
+        // para que no se envie el query string en la parte superior, ni se recarge la pagina
         e.preventDefault();
 
         //validando la ciudad y el pais del input
         if ( ciudad.trim() === '' || pais.trim() === '' ) {
             //Seteamos a true, ya que no paso la validacion
             guardarError(true);
-            
+
             return;
         }
 
@@ -50,7 +53,7 @@ const Formulario = ( { busqueda, guardarBusqueda, guardarConsultar } ) => {
             onSubmit={handleSubmit}
         >
 
-        {error ? <p className='red darken-4 error'>Todos lo campos son Oblitatorios</p> : null }
+        {error ? <Error mensaje='Ambos campos son Oblitatorios' /> : null }
 
         <div className="input-field col s12">
             <input
@@ -91,6 +94,12 @@ const Formulario = ( { busqueda, guardarBusqueda, guardarConsultar } ) => {
         </div>
     </form>
     );
+}
+
+Formulario.propTypes = {
+    busqueda : PropTypes.object.isRequired,
+    guardarBusqueda : PropTypes.func.isRequired,
+    guardarConsultar : PropTypes.func.isRequired,
 }
  
 export default Formulario;
