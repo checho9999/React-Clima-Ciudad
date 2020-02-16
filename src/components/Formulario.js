@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 
-const Formulario = () => {
+const Formulario = ( { busqueda, guardarBusqueda, guardarConsultar } ) => {
 
+    /* Movi todo esto a la app principal
     //useState del Formulario
     const [ busqueda, guardarBusqueda ] = useState({
         ciudad: '',
         pais: ''
-    })
+    })*/
 
     //Para saber si hubo error en la validacion del Formulario
-    const [error, guardarError] = useState(false)   
+    const [ error, guardarError ] = useState(false)   
 
     //Extrayendo ciudad y pais desde el useState
     const { ciudad, pais } = busqueda;  
@@ -19,7 +20,7 @@ const Formulario = () => {
         //Actualizamos el state
         guardarBusqueda({
             ...busqueda,
-            [e.target.name] : e.target.value
+            [ e.target.name ] : e.target.value
         })
     }
 
@@ -29,11 +30,18 @@ const Formulario = () => {
 
         //validando la ciudad y el pais del input
         if ( ciudad.trim() === '' || pais.trim() === '' ) {
+            //Seteamos a true, ya que no paso la validacion
             guardarError(true);
+            
             return;
         }
 
+        //Reseteamos el valor a false, porque los datos estaban completos
         guardarError(false);
+
+        //Para que no se este verificando todo el tiempo el cambio caracter a caracter del input
+        //...con esto, solo lo hace cuando esta el Formulario OK
+        guardarConsultar(true); 
 
     }
 
